@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <input type="date" id="data" placeholder="Digite o dia">
+    <button id="botao">Clica</button><br><br>
+    <button id="reset">Pesquisar Nova Data</button><br><br>
+    <img id="resultadoIMG" src=""></img>
+    <iframe id="video" src="" frameborder="0"></iframe>
+</head>
+<body>
+    <script  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function(){
+          procuraEexibeArquivo()
+          reiniciaPrograma()
+      })
+        function procuraEexibeArquivo(){
+            $('#botao').one("click", function (){
+            var diaMesAno = $('#data').val()
+            
+            var dados = {date: diaMesAno}
+            $.get('https://api.nasa.gov/planetary/apod?api_key=R3tdDUYqHXDoksoIPeNEze7G4geXuqRQTbYRM6H2', dados, function(data){
+            
+                //console.log(data.url)
+                var imagem = $('#resultadoIMG')
+                var vid = $('#video')
+                if(data.media_type == "image"){
+                    
+                    imagem.attr('src', data.url)
+
+                }else{
+                    vid.attr('src', data.url)
+                }
+
+
+    
+    })
+                $('#data').attr('disabled',true)
+                
+})
+ }
+        
+        function reiniciaPrograma(){
+            $('#reset').click(function(){
+                var imagem = $('#resultadoIMG')
+                imagem.attr('src', null)
+                var vid = $('#video')
+                vid.attr('src', null)
+                $('#data').attr('disabled', false)
+                procuraEexibeArquivo()
+            })
+        }
+    
+    </script>
+</body>
+</html>
