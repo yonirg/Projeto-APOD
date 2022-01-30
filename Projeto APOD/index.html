@@ -5,13 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <input type="date" id="data" placeholder="Digite o dia">
-    <button id="botao">Clica</button><br><br>
-    <button id="reset">Pesquisar Nova Data</button><br><br>
-    <img id="resultadoIMG" src=""></img>
-    <iframe id="video" src="" frameborder="0"></iframe>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="tudo">
+        <div id="container">
+            <input type="date" id="data" placeholder="Digite o dia">
+            <button id="botao">Clica</button><br><br>
+        </div>     <br><br>   
+        
+        <div id="caixa">
+            <div class="media">
+                <img id="resultadoIMG" src=""></img>
+                <iframe id="video" src="" frameborder="0"></iframe>
+            </div>
+    </div>
+        <div id="reinicio"><button id="reset">Pesquisar Nova Data</button><br><br>
+        </div>
+</div>
+    
     <script  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(function(){
@@ -25,7 +37,7 @@
             var dados = {date: diaMesAno}
             $.get('https://api.nasa.gov/planetary/apod?api_key=R3tdDUYqHXDoksoIPeNEze7G4geXuqRQTbYRM6H2', dados, function(data){
             
-                //console.log(data.url)
+                console.log(data.url)
                 var imagem = $('#resultadoIMG')
                 var vid = $('#video')
                 if(data.media_type == "image"){
