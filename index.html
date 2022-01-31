@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="tudo">
+        <h1>Digite a data que você estaria de saber como estava o universo!!!</h1>
+        <div id="container">
+            <input type="date" id="data" placeholder="Digite o dia">
+            <button id="botao">Veja como estava o universo!</button><br><br>
+        </div>     <br><br>   
+        
+        <div id="caixa">
+            <div class="media">
+                <img id="resultadoIMG" src=""></img>
+                <img style="height: 100px;" id="spinner"  src="loading-buffering.gif" >
+
+                <iframe id="video" src="" frameborder="0"></iframe>
+
+            </div>
+    </div>
+        <div id="reinicio"><button id="reset">Tentar Outra Data</button><br><br>
+        </div>
+</div>
+    <footer id="rodape">
+        
+        <p> &copy 2022 - Created by Yoni</p>
+    </footer>
+    <script  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(function(){
+          procuraEexibeArquivo()
+          reiniciaPrograma()
+      })
+        function procuraEexibeArquivo(){
+           
+
+            $('#caixa').addClass('desaparece')
+
+            $('#botao').one("click", function (){
+                $('#spinner').addClass('spinner').show()
+            $('#caixa').removeClass('desaparece')
+            
+            
+
+            var diaMesAno = $('#data').val()
+            
+            var dados = {date: diaMesAno}
+            $.get('https://api.nasa.gov/planetary/apod?api_key=dMPHJ8MdWzSafEhcsc1gYiPWx9PbRqBrpF9y9Hay', dados, function(data){
+
+                console.log(data.url)//saber se achou o arquivo
+                var imagem = $('#resultadoIMG')
+                var vid = $('#video')
+                if(data.media_type == "image"){
+                    $('#resultadoIMG').show()
+
+                    imagem.attr('src', data.url)
+                    $('#spinner').addClass('desaparece')
+                }else{
+                    $('#video').show()
+                    vid.attr('src', data.url)
+                    $('#spinner').addClass('desaparece')
+                }
+
+
+    
+    })
+                $('#data').attr('disabled',true)
+                
+})
+ }
+        
+        function reiniciaPrograma(){
+            $('#reset').click(function(){
+                var imagem = $('#resultadoIMG')
+                imagem.attr('src', null)
+                var vid = $('#video')
+                vid.attr('src', null)
+                $('#data').attr('disabled', false)
+                procuraEexibeArquivo()
+                
+            })
+        }
+    
+    </script>
+</body>
+</html>
